@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 import requests
+import math
 
 app = Flask(__name__)
 
@@ -9,7 +10,7 @@ API_KEY = "api_key=J1YY9G8BLXGUET2W9"
 FORMAT_TYPE = "&format=json"
 RESULT_COUNT = "&results=1"
 BUCKET = "&bucket=audio_summary&bucket=song_hotttnesss"
-SONG_MIN_HOTTTNESSS = "&song_min_hotttnesss=0.3"
+SONG_MIN_HOTTTNESSS = "&song_min_hotttnesss=0.6"
 
 # SPOTIFY
 SPOTIFY_BASE_URL = "https://api.spotify.com/v1/search?"
@@ -95,6 +96,7 @@ def format_response(echonest_results, spotify_results):
   response["status"] = "success"
   response["artist_name"] = echonest_results["response"]["songs"][0]["artist_name"].encode('utf-8').strip()
   response["track_name"] = echonest_results["response"]["songs"][0]["title"].encode('utf-8').strip()
+  response["duration"] = str(math.ceil(echonest_results["response"]["songs"][0]["audio_summary"]["duration"]))
   response["audio_summary"] = {}
   response["audio_summary"]["tempo"] = str(echonest_results["response"]["songs"][0]["audio_summary"]["tempo"])
   response["audio_summary"]["danceability"] = str(echonest_results["response"]["songs"][0]["audio_summary"]["danceability"])
