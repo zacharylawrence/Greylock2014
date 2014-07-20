@@ -1,6 +1,5 @@
 from flask import Flask, jsonify
 import requests
-import math
 
 app = Flask(__name__)
 
@@ -96,7 +95,7 @@ def format_response(echonest_results, spotify_results):
   response["status"] = "success"
   response["artist_name"] = echonest_results["response"]["songs"][0]["artist_name"].encode('utf-8').strip()
   response["track_name"] = echonest_results["response"]["songs"][0]["title"].encode('utf-8').strip()
-  response["duration"] = str(int(math.ceil(echonest_results["response"]["songs"][0]["audio_summary"]["duration"])))
+  response["duration"] = str(spotify_results["tracks"]["items"][0]["duration_ms"])
   response["audio_summary"] = {}
   response["audio_summary"]["tempo"] = str(echonest_results["response"]["songs"][0]["audio_summary"]["tempo"])
   response["audio_summary"]["danceability"] = str(echonest_results["response"]["songs"][0]["audio_summary"]["danceability"])
