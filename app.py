@@ -90,7 +90,7 @@ def format_response(echonest_results, spotify_results):
   response["album_url"] = str(spotify_results["tracks"]["items"][0]["album"]["images"][0]["url"])
 
   temp = {}
-  temp['results'] = response
+  temp['results'] = [response]
   return jsonify(temp)
 
 if __name__ == "__main__":
